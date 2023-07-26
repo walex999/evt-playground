@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_","unique":true}],"uuid":"18f83942fb4e4bdc9735533f9776dead","collectionName":"security_identity_providers","type":"collection"}

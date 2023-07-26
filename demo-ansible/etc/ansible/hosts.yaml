@@ -1,0 +1,9 @@
+all:
+  hosts:
+    127.0.0.1:
+      ansible_connection: local
+  vars:
+    horizon_endpoint: http://horizon:9000
+    api_id: administrator
+    api_key: evertrust
+    profile: WebRATLSServerStream

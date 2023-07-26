@@ -1,21 +1,20 @@
 version: "3.1"
 services:
-  nginx:
+  ingress:
     image: nginx:1
     restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./etc/nginx:/etc/nginx/
-      - ./etc/ssl:/var/ssl
+      - ./ingress/etc/:/etc/nginx/
     depends_on:
       - horizon
       - stream
   horizon:
     image: registry.evertrust.io/horizon:2.4.4
     volumes:
-      - ./licenses:/var/horizon/license/
+      - ./horizon/license:/var/horizon/license/
     environment:
       MONGODB_URI: mongodb://mongo:27017/horizon
       APPLICATION_SECRET: evertrust
@@ -35,12 +34,12 @@ services:
   stream:
     image: registry.evertrust.io/stream:1.1.3
     volumes:
-      - ./licenses:/var/stream/license/
-      - ./etc/stream:/var/stream/etc/
+      - ./stream/license:/var/stream/license/
+      - ./stream/etc:/var/stream/etc/
     environment:
       MONGODB_URI: mongodb://mongo:27017/stream
       APPLICATION_SECRET: evertrust
-      EVENT_SEAL_SECRET: evertrust
+      EVENT_SEAL_SECRET: itsnotevertrust
       VAULT_TYPE: ssv
       VAULT_MASTER_PASSWORD: evertrust
       ACME_URL_SCHEME: http
@@ -57,16 +56,33 @@ services:
   mongo:
     image: mongo:5
     restart: always
+    command: --quiet
     ports:
       - "27017:27017"
     volumes:
-      - ./database:/docker-entrypoint-initdb.d:ro
-  webserver:
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+      - ./database/dump:/var/mongodb/dump:ro
+
+  demo-client:
+    profiles:
+      - client
     build:
-      context: ./webserver
+      context: ./demo-client
       args:
         REPOSITORY_USER: ${REPOSITORY_USER}
         REPOSITORY_PASSWORD: ${REPOSITORY_PASSWORD}
+    env_file:
+      - .env
+    depends_on:
+      - horizon
     privileged: true
     ports:
       - "8443:443"
+  demo-ansible:
+    profiles:
+      - ansible
+    build:
+      context: ./demo-ansible
+    privileged: true
+    depends_on:
+      - horizon
