@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"forest":{"$numberInt":"1"}},"name":"forest_idx","unique":true}],"uuid":"1f18c398b26e4d8883f057b346066abb","collectionName":"wcce_forest_mappings","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"forest":{"$numberInt":"1"}},"name":"forest_idx","unique":true}],"uuid":"947b7ece43484eb7b15b6e4eba0f926b","collectionName":"wcce_forest_mappings","type":"collection"}
