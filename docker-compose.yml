@@ -77,6 +77,8 @@ services:
     depends_on:
       - horizon
     privileged: true
+    links:
+      - ingress:horizon.lab
     ports:
       - "8443:443"
   demo-ansible:
