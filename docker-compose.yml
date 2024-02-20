@@ -47,6 +47,7 @@ services:
       HOSTS_ALLOWED.0: .
       LICENSE_PATH: /var/stream/license/stream.lic
       KEYSET_PATH: /var/stream/etc/keyset.json
+      HTTP_CERTIFICATE_HEADER: X-Forwarded-Tls-Client-Cert
     depends_on:
       - mongo
     healthcheck:
