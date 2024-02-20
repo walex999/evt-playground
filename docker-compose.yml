@@ -24,6 +24,7 @@ services:
       ACME_URL_SCHEME: http
       HOSTS_ALLOWED.0: .
       LICENSE_PATH: /var/horizon/license/horizon.lic
+      HTTP_CERTIFICATE_HEADER: X-Forwarded-Tls-Client-Cert
     depends_on:
       - mongo
     healthcheck:
@@ -47,7 +48,6 @@ services:
       HOSTS_ALLOWED.0: .
       LICENSE_PATH: /var/stream/license/stream.lic
       KEYSET_PATH: /var/stream/etc/keyset.json
-      HTTP_CERTIFICATE_HEADER: X-Forwarded-Tls-Client-Cert
     depends_on:
       - mongo
     healthcheck:
