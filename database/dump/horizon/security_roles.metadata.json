@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_","unique":true}],"uuid":"aaf7bf11c16742229ae9ecfdee3b03af","collectionName":"security_roles","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_","unique":true}],"uuid":"9049a7c0e8d44abe8730f643994e4dfa","collectionName":"security_roles","type":"collection"}
