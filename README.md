@@ -65,6 +65,8 @@ The following services are exposed once the project is up and running :
 - Horizon : https://horizon.lab
 - Stream : https://stream.lab
 
+To log in, if you opted in for database seeding, a default administrator account is created on both products. The default credentials are `administrator` / `evertrust`.
+
 ## Profiles
 
 Profiles is a Docker Compose feature used to enable or disable components on the fly. It allows the installation to stay lightweight while taking many scenarios into account in this playground.
