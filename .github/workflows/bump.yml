@@ -50,10 +50,7 @@ jobs:
           cd horizon
           git switch tags/v${{ inputs.horizon-target-version }} --detach
           cd /home/runner/work
-
-      - name: Getting in
-        run: |
-          cd /home/runner/work/playground
+    
 
       - name: Running upgrade for both Horizon and Stream
         if: ${{ inputs.stream-target-version && inputs.horizon-target-version }}
