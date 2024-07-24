@@ -30,6 +30,12 @@ jobs:
           ref: "master"
 
 
+      - name: Update and install
+        run: |
+          apt update -y
+          apt upgrade -y
+          apt install docker -y
+
       - name: Cloning Stream
         if: ${{ inputs.stream-target-version }}
         run: | 
