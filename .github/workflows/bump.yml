@@ -1,0 +1,97 @@
+name: bump
+
+#act -W ".github/workflows/bump.yml" --container-architecture linux/amd64 --input horizon-source-version=2.5.7 horizon-target-version=2.5.9
+
+on:
+  workflow_dispatch:
+    inputs:
+      stream-target-version:
+        description: 'Stream target version for the update'
+        required: false
+      horizon-target-version:
+        description: 'Horizon target version for the update'
+        required: false
+      stream-source-version:
+        description: 'Stream source version for the update, required if Stream target version is specified'
+        required: false
+      horizon-source-version:
+        description: 'Horizon target version for the update, required if Horizon target version is specified'
+        required: false
+
+jobs:
+  bumper:
+    runs-on: ubuntu-22.04
+
+    steps:
+
+      - name: Cloning Playground
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.API_TOKEN_GITHUB}}
+          ref: 6a5d3f3b642d82af9c0ea8be84fc6e86958e3202
+
+      - name: Getting out
+        run: |
+          ls
+          cd ..
+          ls
+
+      - name: Cloning Stream
+        if: ${{inputs.stream-target-version}}
+        run: | 
+          git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/stream.git"
+          cd stream
+          cd ..
+
+      - name: Cloning Horizon
+        if: ${{inputs.horizon-target-version}}
+        run: |
+          git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/horizon.git"
+          cd horizon
+          cd ..
+          ls
+
+      - name: Getting in
+        run: |
+          ls
+          pwd
+          cd playground
+
+      - name: Running upgrade for both Horizon and Stream
+        if: ${{inputs.stream-target-version && inputs.horizon-target-version}}
+        run: |
+          ./.build/upgrade.sh \ 
+          --stm_path ../stream \
+          --hrz_path ../horizon \ 
+          --hrz_source_version ${{inputs.horizon-source-version}} \
+          --hrz_target_version ${{inputs.horizon-target-version}} \
+          --stm_source_version ${{inputs.stream-source-version}} \ 
+          --stm_target_version ${{inputs.stream-target-version}} \
+          --playground_path .
+
+      - name: Running upgrade for Stream
+        if: ${{inputs.stream-target-version }}
+        run: |
+          ./.build/upgrade.sh \ 
+          --stm_path ../stream \
+          --stm_source_version ${{inputs.stream-source-version}}  \ 
+          --stm_target_version ${{inputs.stream-target-version}} \
+          --playground_path .
+
+      - name: Running upgrade for Horizon
+        if: ${{inputs.horizon-target-version }}
+        run: |
+          ls -la ..
+          ls -la
+          ./.build/upgrade.sh \
+          --hrz_path ../horizon \ 
+          --hrz_source_version ${{inputs.horizon-source-version}} \
+          --hrz_target_version ${{inputs.horizon-target-version}} \
+          --playground_path .
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: Update Playground
+          commit-message: Peter has Updated the playground
+          branch: update-playground
