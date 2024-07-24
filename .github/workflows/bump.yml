@@ -1,6 +1,6 @@
 name: bump
 
-#act -W ".github/workflows/bump.yml" --container-architecture linux/amd64 --input horizon-source-version=2.5.7 horizon-target-version=2.5.9
+#act -W ".github/work/evt-playgroundflows/bump.yml" --container-architecture linux/amd64 --input horizon-source-version=2.5.7 horizon-target-version=2.5.9
 
 on:
   workflow_dispatch:
@@ -23,8 +23,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    
-    
       - name: Cloning Playground
         uses: actions/checkout@v4
         with:
@@ -35,29 +33,29 @@ jobs:
       - name: Cloning Stream
         if: ${{ inputs.stream-target-version }}
         run: | 
-          cd /home/runner/work
+          cd /home/runner/work/evt-playground
           git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/stream.git"
           cd stream
           git switch tags/v${{ inputs.stream-target-version }} --detach
-          cd /home/runner/work
+          cd /home/runner/work/evt-playground
           ls
 
       - name: Cloning Horizon
         if: ${{ inputs.horizon-target-version }}
         run: |
-          cd /home/runner/work
+          cd /home/runner/work/evt-playground
           git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/horizon.git"
           cd horizon
           git switch tags/v${{ inputs.horizon-target-version }} --detach
-          cd /home/runner/work
+          cd /home/runner/work/evt-playground
     
 
       - name: Running upgrade for both Horizon and Stream
         if: ${{ inputs.stream-target-version && inputs.horizon-target-version }}
         run: |
-          /home/runner/work/playground/.build/upgrade.sh \ 
-          --stm_path /home/runner/work/stream \
-          --hrz_path /home/runner/work/horizon \ 
+          /home/runner/work/evt-playground/playground/.build/upgrade.sh \ 
+          --stm_path /home/runner/work/evt-playground/stream \
+          --hrz_path /home/runner/work/evt-playground/horizon \ 
           --hrz_source_version ${{ inputs.horizon-source-version }} \
           --hrz_target_version ${{ inputs.horizon-target-version }} \
           --stm_source_version ${{ inputs.stream-source-version }} \ 
@@ -67,8 +65,8 @@ jobs:
       - name: Running upgrade for Stream
         if: ${{inputs.stream-target-version }}
         run: |
-          /home/runner/work/playground/.build/upgrade.sh \ 
-          --stm_path /home/runner/work/stream \
+          /home/runner/work/evt-playground/playground/.build/upgrade.sh \ 
+          --stm_path /home/runner/work/evt-playground/stream \
           --stm_source_version ${{ inputs.stream-source-version }}  \ 
           --stm_target_version ${{ inputs.stream-target-version }} \
           --playground_path .
@@ -76,8 +74,8 @@ jobs:
       - name: Running upgrade for Horizon
         if: ${{inputs.horizon-target-version }}
         run: |
-          /home/runner/work/playground/.build/upgrade.sh \
-          --hrz_path /home/runner/work/horizon \ 
+          /home/runner/work/evt-playground/playground/.build/upgrade.sh \
+          --hrz_path /home/runner/work/evt-playground/horizon \ 
           --hrz_source_version ${{ inputs.horizon-source-version }} \
           --hrz_target_version ${{ inputs.horizon-target-version }} \
           --playground_path .
