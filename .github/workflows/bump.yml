@@ -8,11 +8,11 @@ on:
       stream-target-version:
         description: 'Stream target version for the update'
         required: false
-      horizon-target-version:
-        description: 'Horizon target version for the update'
-        required: false
       stream-source-version:
         description: 'Stream source version for the update, required if Stream target version is specified'
+        required: false
+      horizon-target-version:
+        description: 'Horizon target version for the update'
         required: false
       horizon-source-version:
         description: 'Horizon target version for the update, required if Horizon target version is specified'
@@ -23,11 +23,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-
     
-      - name: Making playground dir
-        run: |
-          mkdir playground && cd playground
     
       - name: Cloning Playground
         uses: actions/checkout@v4
@@ -35,36 +31,36 @@ jobs:
           #token: ${{ secrets.API_TOKEN_GITHUB }}
           ref: "master"
 
-      - name: Making playground dir
-        run: |
-          cd ..
 
       - name: Cloning Stream
         if: ${{ inputs.stream-target-version }}
         run: | 
+          cd /home/runner/work
           git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/stream.git"
           cd stream
           git switch tags/v${{ inputs.stream-target-version }} --detach
-          cd ..
+          cd /home/runner/work
+          ls
 
       - name: Cloning Horizon
         if: ${{ inputs.horizon-target-version }}
         run: |
+          cd /home/runner/work
           git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/horizon.git"
           cd horizon
           git switch tags/v${{ inputs.horizon-target-version }} --detach
-          cd ..
+          cd /home/runner/work
 
       - name: Getting in
         run: |
-          cd playground
+          cd /home/runner/work/playground
 
       - name: Running upgrade for both Horizon and Stream
         if: ${{ inputs.stream-target-version && inputs.horizon-target-version }}
         run: |
-          ./.build/upgrade.sh \ 
-          --stm_path ../stream \
-          --hrz_path ../horizon \ 
+          /home/runner/work/playground/.build/upgrade.sh \ 
+          --stm_path /home/runner/work/stream \
+          --hrz_path /home/runner/work/horizon \ 
           --hrz_source_version ${{ inputs.horizon-source-version }} \
           --hrz_target_version ${{ inputs.horizon-target-version }} \
           --stm_source_version ${{ inputs.stream-source-version }} \ 
@@ -74,8 +70,8 @@ jobs:
       - name: Running upgrade for Stream
         if: ${{inputs.stream-target-version }}
         run: |
-          ./.build/upgrade.sh \ 
-          --stm_path ../stream \
+          /home/runner/work/playground/.build/upgrade.sh \ 
+          --stm_path /home/runner/work/stream \
           --stm_source_version ${{ inputs.stream-source-version }}  \ 
           --stm_target_version ${{ inputs.stream-target-version }} \
           --playground_path .
@@ -83,10 +79,8 @@ jobs:
       - name: Running upgrade for Horizon
         if: ${{inputs.horizon-target-version }}
         run: |
-          ls -la ..
-          ls -la
-          ./.build/upgrade.sh \
-          --hrz_path ../horizon \ 
+          /home/runner/work/playground/.build/upgrade.sh \
+          --hrz_path /home/runner/work/horizon \ 
           --hrz_source_version ${{ inputs.horizon-source-version }} \
           --hrz_target_version ${{ inputs.horizon-target-version }} \
           --playground_path .
