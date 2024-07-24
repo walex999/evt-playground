@@ -55,14 +55,14 @@ jobs:
         run: |
           pwd
           ls
-          /home/runner/work/evt-playground/playground/.build/upgrade.sh \ 
+          /home/runner/work/evt-playground/evt-playground/.build/upgrade.sh \ 
           --stm_path /home/runner/work/evt-playground/stream \
           --hrz_path /home/runner/work/evt-playground/horizon \ 
           --hrz_source_version ${{ inputs.horizon-source-version }} \
           --hrz_target_version ${{ inputs.horizon-target-version }} \
           --stm_source_version ${{ inputs.stream-source-version }} \ 
           --stm_target_version ${{ inputs.stream-target-version }} \
-          --playground_path /home/runner/work/evt-playground/playground/
+          --playground_path /home/runner/work/evt-playground/evt-playground/
 
       - name: Running upgrade for Stream
         if: ${{inputs.stream-target-version }}
@@ -71,7 +71,7 @@ jobs:
           --stm_path /home/runner/work/evt-playground/stream \
           --stm_source_version ${{ inputs.stream-source-version }}  \ 
           --stm_target_version ${{ inputs.stream-target-version }} \
-          --playground_path /home/runner/work/evt-playground/playground/
+          --playground_path /home/runner/work/evt-playground/evt-playground/
 
       - name: Running upgrade for Horizon
         if: ${{inputs.horizon-target-version }}
@@ -80,7 +80,7 @@ jobs:
           --hrz_path /home/runner/work/evt-playground/horizon \ 
           --hrz_source_version ${{ inputs.horizon-source-version }} \
           --hrz_target_version ${{ inputs.horizon-target-version }} \
-          --playground_path /home/runner/work/evt-playground/playground/
+          --playground_path /home/runner/work/evt-playground/evt-playground/
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
