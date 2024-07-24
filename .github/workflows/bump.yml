@@ -24,23 +24,27 @@ jobs:
 
     steps:
 
+    
+      - name: Making playground dir
+        run: |
+          mkdir playground && cd playground
+    
       - name: Cloning Playground
         uses: actions/checkout@v4
         with:
           #token: ${{ secrets.API_TOKEN_GITHUB }}
           ref: "master"
 
-      - name: Getting out
+      - name: Making playground dir
         run: |
-          ls
           cd ..
-          ls
 
       - name: Cloning Stream
         if: ${{ inputs.stream-target-version }}
         run: | 
           git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/stream.git"
           cd stream
+          git switch tags/v${{ inputs.stream-target-version }} --detach
           cd ..
 
       - name: Cloning Horizon
@@ -48,13 +52,11 @@ jobs:
         run: |
           git clone "https://walex999:${{ secrets.API_TOKEN_GITLAB }}@gitlab.com/evertrust/horizon.git"
           cd horizon
+          git switch tags/v${{ inputs.horizon-target-version }} --detach
           cd ..
-          ls
 
       - name: Getting in
         run: |
-          ls
-          pwd
           cd playground
 
       - name: Running upgrade for both Horizon and Stream
