@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_idx","unique":true}],"uuid":"6ffb7b8ac4774921bc0a65cc130cb159","collectionName":"http_proxies","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_idx","unique":true}],"uuid":"e1d15eda5ca94826a34be9715b6c6a8f","collectionName":"http_proxies","type":"collection"}
