@@ -62,6 +62,10 @@ jobs:
         run: |
           /home/runner/work/evt-playground/playground/.build/upgrade.sh --hrz_path /home/runner/work/evt-playground/horizon --hrz_source_version ${{ inputs.horizon-source-version }} --hrz_target_version ${{ inputs.horizon-target-version }} --playground_path /home/runner/work/evt-playground/evt-playground/
 
+      - name: Change Permissions
+        run: |
+          sudo chown -R $USER:$USER /home/runner/work/evt-playground/playground
+  
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
