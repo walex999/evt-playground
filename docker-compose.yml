@@ -12,12 +12,12 @@ services:
       - horizon
       - stream
   horizon:
-    image: registry.evertrust.io/horizon:2.5.7
+    image: registry.evertrust.io/horizon:2.5.9
     volumes:
       - ./horizon/license:/var/horizon/license/
     environment:
       MONGODB_URI: mongodb://mongo:27017/horizon
-      APPLICATION_SECRET: evertrust
+      APPLICATION_SECRET: evertrustisthebestcompanysince2017
       EVENT_SEAL_SECRET: evertrust
       VAULT_TYPE: ssv
       VAULT_MASTER_PASSWORD: evertrust
@@ -40,7 +40,7 @@ services:
       - ./stream/etc:/var/stream/etc/
     environment:
       MONGODB_URI: mongodb://mongo:27017/stream
-      APPLICATION_SECRET: evertrust
+      APPLICATION_SECRET: evertrustisthebestcompanysince2017
       EVENT_SEAL_SECRET: itsnotevertrust
       VAULT_TYPE: ssv
       VAULT_MASTER_PASSWORD: evertrust
@@ -56,7 +56,7 @@ services:
       timeout: 60s
       retries: 7
   mongo:
-    image: mongo:5
+    image: mongo:7
     restart: always
     command: --quiet
       #ports:
