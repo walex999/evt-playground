@@ -27,14 +27,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           #token: ${{ secrets.API_TOKEN_GITHUB }}
-          ref: "master"
+          ref: "master"          
 
-
-      - name: Update and install
-        run: |
-          apt update -y
-          apt upgrade -y
-          apt install docker -y
 
       - name: Cloning Stream
         if: ${{ inputs.stream-target-version }}
