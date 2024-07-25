@@ -18,9 +18,10 @@ on:
         description: 'Horizon target version for the update, required if Horizon target version is specified'
         required: false
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: write-all
+#permissions:
+  #contents: write
+  #pull-requests: write
 
 jobs:
   bumper:
